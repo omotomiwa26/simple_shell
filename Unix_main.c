@@ -34,20 +34,22 @@ int main(int argc, char *argv[])
 		  break;
 		  }*/
 		/*if (execute_env(argv) != 0)
-		{
-			free(unix_input);
-			free_array_vectors(argv);
-			continue;
-		}*/
+		  {
+		  free(unix_input);
+		  free_array_vectors(argv);
+		  continue;
+		  }*/
 		exe_stat = exec_command(argv);
 		if (exe_stat == 1)
+		{
 			display_error_message(argv, "File not found");
-		/*free(unix_input);*/
-		/*free_array_vectors(argv);*/
+			/*free(unix_input);*/
+			free_array_vectors(argv);
+			continue;
+		}
 		if (execute_env(argv) != 0)
-		  {
-		  /*free_array_vectors(argv);*/
-		  }
+			/*free(unix_input);*/
+		free_array_vectors(argv);
 	}
 	return (0);
 }
