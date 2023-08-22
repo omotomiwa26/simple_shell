@@ -9,47 +9,51 @@
 
 int main(int argc, char *argv[])
 {
-	char *unix_input;
+	char *unix_input,**input_arg;
 	ssize_t file_check;
-	int exe_stat = 0;
+	int exe_env, exe_stat = 0;
 
 	(void)argc;
+	(void)argv;
 
 	while (1)
 	{
 		unix_input = NULL, file_check = 0;
 		unix_input = shell_prompt(&file_check);
-		argv = command_tokens(unix_input, file_check);
-
-		if (argv[0] == NULL)
+		input_arg = command_tokens(unix_input, input_arg, file_check);
+		if (input_arg[0] == NULL)
 		{
+			free(unix_input);
 			continue;
 		}
-		/*if (_strcmp(argv[0], "exit") == 0)
-		  {
-		  free(unix_input);
-		  free_array_vectors(argv);
-		  exit_shell(argv, exe_stat);
-		  free_array_vectors(argv);
-		  break;
-		  }*/
-		/*if (execute_env(argv) != 0)
-		  {
-		  free(unix_input);
-		  free_array_vectors(argv);
-		  continue;
-		  }*/
-		exe_stat = exec_command(argv);
+		if (_strcmp(input_arg[0], "env") == 0)
+		{
+			free(unix_input);
+			show_env();
+			free_array_vectors(input_arg);
+			continue;
+		}
+		if (_strcmp(input_arg[0], "exit") == 0)
+		{
+			free(unix_input);
+			exit_shell(input_arg, exe_stat);
+			free_array_vectors(input_arg);
+			continue;
+		}
+		exe_stat = exec_command(input_arg);
 		if (exe_stat == 1)
 		{
-			display_error_message(argv, "File not found");
-			/*free(unix_input);*/
-			free_array_vectors(argv);
-			continue;
+			display_error_message(input_arg, "File not found");
 		}
-		if (execute_env(argv) != 0)
-			/*free(unix_input);*/
-		free_array_vectors(argv);
+		exe_env = execute_env(input_arg);
+		if (exe_env != 0)
+			free(unix_input);
+		free_array_vectors(input_arg);
+		/*exe_stat = exec_command(input_arg);
+		  if (exe_stat == 1)
+		  display_error_message(input_arg, "File not found");
+		  free(unix_input);
+		  free_array_vectors(input_arg);*/
 	}
 	return (0);
 }

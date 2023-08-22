@@ -18,6 +18,9 @@ int exec_command(char *argv[])
 	}
 	command = argv[0];
 	new_command = find_command_path(command);
+	
+	if (new_command == NULL)
+		return (1);
 	if (argv && access(new_command, X_OK) != -1)
 	{
 		child_pid = fork();

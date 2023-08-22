@@ -1,6 +1,7 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
+#define BUFFER_SIZE 1024
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -17,6 +18,8 @@
 
 
 extern char **environ;
+
+char *_getline();
 
 int _atoi(char *s);
 
@@ -48,9 +51,7 @@ void display_error_message(char **argv, char *message);
 
 int dis_string(char *str);
 
-int _putchar(char c);
-
-/*void exit_shell(char *argv_cmd[], int exit_status);*/
+int _puterr(char c);
 
 void exit_shell(char **exit_command, int exit_status);
 
@@ -72,7 +73,7 @@ char *shell_prompt(ssize_t *file_check);
 
 void free_array_vectors(char *argv[]);
 
-char **command_tokens(char *cmd_input, ssize_t file_check);
+char **command_tokens(char *cmd_input, char **cmd, ssize_t file);
 
 size_t get_line(char **lineptr, size_t *n, FILE *stream);
 

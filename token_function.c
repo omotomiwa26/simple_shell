@@ -5,9 +5,9 @@
  * @file: size of file read
  * Return: array of pointer to strings
  */
-char **command_tokens(char *cmd_input, ssize_t file)
+char **command_tokens(char *cmd_input, char **cmd, ssize_t file)
 {
-	char **cmd, *cmd_input_cpy, *tok;
+	char *tok, *cmd_input_cpy;
 	const char *delimiter = " \n";
 	int tok_len, tok_cnt = 0, i = 0;
 
@@ -15,6 +15,7 @@ char **command_tokens(char *cmd_input, ssize_t file)
 	if (cmd_input_cpy == NULL)
 	{
 		perror("Error: Memory Allocation Failed");
+		free(cmd_input_cpy);
 		return (NULL);
 	}
 	_strcpy(cmd_input_cpy, cmd_input);
@@ -23,12 +24,18 @@ char **command_tokens(char *cmd_input, ssize_t file)
 	while (tok)
 	{
 		tok_cnt++;
-		free(tok);
+		/*free(tok);*/
 		tok = _strtok(NULL, delimiter);
 	}
 	tok_cnt++;
 
 	cmd = malloc(sizeof(char *) * tok_cnt);
+	if (cmd == NULL)
+	{
+	perror("Error: Memory Allocation Failed");
+	free(cmd);
+	return (NULL);
+	}
 	tok = _strtok(cmd_input_cpy, delimiter);
 	for (i = 0; tok != NULL; i++)
 	{
@@ -36,10 +43,11 @@ char **command_tokens(char *cmd_input, ssize_t file)
 		cmd[i] = malloc(sizeof(char) * tok_len + 1);
 		cmd[i][tok_len] = '\0';
 		_strcpy(cmd[i], tok);
-		free(tok);
+		/*free(tok);*/
 		tok = _strtok(NULL, delimiter);
 	}
+	free(tok);
 	cmd[i] = NULL;
-	/*free(cmd_input_cpy);*/
+	free(cmd_input_cpy);
 	return (cmd);
 }
