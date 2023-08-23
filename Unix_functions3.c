@@ -29,7 +29,7 @@ int _strncmp(const char *str1, const char *str2, size_t num)
 }
 /**
  * exit_prompt - function exits the command line prompt
- * @argv_cmd: command argument entered
+ * @exit_command: command argument entered
  * @exit_status: integer coversion of message displayed on exit
  * Return: NULL
  * Else: Exit the shell prompt
@@ -80,11 +80,6 @@ int _echo(char *args)
 {
 	char *value;
 
-	/*if (args == NULL)
-	{
-		write(2, "Error: Enter string to echo", 30);
-		return (-1);
-	}*/
 	value = _getenv(args);
 	if (value)
 	{
