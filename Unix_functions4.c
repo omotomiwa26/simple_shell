@@ -19,15 +19,15 @@ int _puterr(char c)
  */
 void free_array_vectors(char *argv[])
 {
-char **temp_argv = argv;
+	char **temp_argv = argv;
 
-    do {
-        free(*temp_argv);
-        *temp_argv = NULL;
-        temp_argv++;
-    } while (*temp_argv != NULL);
+	do {
+		free(*temp_argv);
+		*temp_argv = NULL;
+		temp_argv++;
+	} while (*temp_argv != NULL);
 
-    free(argv);
+	free(argv);
 }
 /**
  * display_error_message - Function prints an error message
