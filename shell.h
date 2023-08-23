@@ -73,7 +73,7 @@ char *shell_prompt(ssize_t *file_check);
 
 void free_array_vectors(char *argv[]);
 
-char **command_tokens(char *cmd_input, char **cmd, ssize_t file);
+char **command_tokens(char *cmd_input, ssize_t file);
 
 int set_environ(char *args[]);
 
