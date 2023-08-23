@@ -5,7 +5,7 @@
  * @s1: string to be compared.
  * @s2: second string to be compared.
  *
- * Return: The integer difference of S1 and S2.
+ * Return: The integer difference of s1 and s2.
  */
 
 int _strcmp(char *s1, char *s2)
@@ -17,7 +17,6 @@ int _strcmp(char *s1, char *s2)
 	}
 	return (*s1 - *s2);
 }
-
 /**
  * *_strtok - function tokenizes a string given a delimiter.
  * @str: pointer to the string to be tokenized
@@ -25,10 +24,9 @@ int _strcmp(char *s1, char *s2)
  * Return: pointer to next token.
  * Else: NULL
  */
-
 char *_strtok(char *str, const char *delim)
 {
-	static char *new_tok; /*holds the state between calls to strtok*/
+	static char *new_tok;
 	char *tok;
 
 	if (str != NULL)
