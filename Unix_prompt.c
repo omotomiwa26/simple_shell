@@ -25,9 +25,9 @@ char *shell_prompt(ssize_t *file_check)
 	}
 	*file_check = _strlen(prompt_input);
 
-	if (*file_check == -1) 
-	{	
-		if(isatty(STDIN_FILENO))
+	if (*file_check == -1)
+	{
+		if (isatty(STDIN_FILENO))
 			free(prompt_input);
 		exit(EXIT_SUCCESS);
 	}
@@ -36,7 +36,7 @@ char *shell_prompt(ssize_t *file_check)
 		free(prompt_input);
 		exit(EXIT_SUCCESS);
 	}
-	if (*file_check == 0) 
+	if (*file_check == 0)
 	{
 		if (isatty(STDIN_FILENO))
 			free(prompt_input);
