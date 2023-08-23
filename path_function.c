@@ -13,16 +13,17 @@ char *find_command_path(char *command)
 	struct stat buffer;
 
 	pth = _getenv("PATH");
-
+	if (pth == NULL || command == NULL)
+	{
+		return (NULL);
+	}
 	if (stat(command, &buffer) == 0)
 		return (command);
-
 	if (pth)
-	{	
+	{
 		pth_cp = _strdup(pth);
 		cmd_len = _strlen(command);
 		pth_tok = _strtok(pth_cp, ":");
-
 		while (pth_tok)
 		{
 			dir_len = _strlen(pth_tok);
@@ -36,13 +37,11 @@ char *find_command_path(char *command)
 			_strcat(file_pth, command);
 			_strcat(file_pth, "\0");
 			if (stat(file_pth, &buffer) == 0)
-			{	
+			{
 				free(pth_cp);
-				/*free(pth_tok);*/
 				return (file_pth);
 			}
 			free(file_pth);
-			/*free(pth_tok);*/
 			pth_tok = _strtok(NULL, ":");
 		}
 	}
