@@ -1,61 +1,54 @@
 #include "shell.h"
 /**
  * get_line - Function reads an entire line from stream
- * @lineptr: pointer to a pointer to a character
- * @n: pointer to value
- * @stream: pointer to FILE representing the stream to read from
+ * 
  * Return: total bytes of line read from CLI input
  **/
-size_t get_line(char **lineptr, size_t *n, FILE *stream)
+
+char *get_line() 
 {
-int fd;
-size_t bufsize, chars_read, tot_chars_read;
-char *buffer, chars, *new_buffer;
+	static char buffer[BUFFER_SIZE];
+	static size_t buffer_pos = 0;
+	static size_t buffer_size = 0;
 
-	if (lineptr == NULL || n == NULL || stream == NULL)
-	{
-		return (-1);
-	}
-	fd = fileno(stream);
-	bufsize = *n;
-	buffer = *lineptr;
+	/*Initialize a dynamic buffer to store the line*/
+	char* line = NULL;
+	/*size_t line_size = 0;*/
+	size_t line_length = 0;
 
-	if (buffer == NULL)
+	while (1) 
 	{
-		bufsize = 128;
-		buffer = (char *)malloc(bufsize * sizeof(char));
-		if (buffer == NULL)
+		/*If buffer is empty, read more data from input source*/
+		if (buffer_pos >= buffer_size) 
 		{
-			return (-1);
-		}
-	}
-chars_read = 0, tot_chars_read = 0;
-	while (read(fd, &chars, 1) == 1)
-	{
-		if (tot_chars_read >= bufsize - 1)
-		{
-			bufsize *= 2;
-			new_buffer = (char *)realloc(buffer, bufsize * sizeof(char));
-			if (new_buffer == NULL)
+			buffer_size = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+			buffer_pos = 0;
+
+			if (buffer_size <= 0) 
 			{
-				free(buffer);
-				return (-1);
+				break;
 			}
-			buffer = new_buffer;
 		}
-		buffer[tot_chars_read++] = chars;
-		if (chars == '\n')
+		/*Search for newline character in buffer*/
+		while (buffer_pos < buffer_size)
 		{
-			break;
+			char current_char = buffer[buffer_pos++];
+			if (current_char == '\n') 
+			{
+				/*Allocate memory for line and copy characters*/
+				line = realloc(line, line_length + 1);
+				line[line_length] = '\0';
+				return (line);
+			}
+			else
+			{
+				/*Append character to line*/
+				line = realloc(line, line_length + 1);
+				line[line_length++] = current_char;
+			}
 		}
 	}
-	buffer[tot_chars_read] = '\0';
-	*lineptr = buffer;
-	*n = bufsize;
-	if (tot_chars_read == 0 && chars_read == 0)
-	{
-		/*free(buffer);*/
-		return (-1);
-	}
-	return (tot_chars_read);
+	/*Clean up and return NULL if no more lines*/
+	free(line);
+	return (NULL);
 }

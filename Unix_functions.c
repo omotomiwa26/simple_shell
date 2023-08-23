@@ -78,14 +78,16 @@ int _strlen(char *s)
 
 char *_strcpy(char *dest, const char *src) 
 {
-    int a = -1;
+	int n = 0;
 
-    do {
-	a++;
-        dest[a] = src[a];
-    } while (dest[a] != '\0');
+	while (src[n] != '\0')
+	{
+		dest[n] = src[n];
+		n++;
+	}
+	dest[n] = '\0';
 
-    return dest;
+	return (dest);
 }
 /**
  * *_strchr - function searches a string for an integer

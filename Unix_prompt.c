@@ -15,32 +15,31 @@ char *shell_prompt(ssize_t *file_check)
 	{
 		write(1, dis_prompt, _strlen(dis_prompt));
 	}
-	prompt_input = _getline();
+	prompt_input = get_line();
 
 	if (prompt_input == NULL)
 	{
 		if (isatty(STDIN_FILENO))
-			write(1, "\n", 1);
+			write(1, "Logging Out From simple shell (?) .....", 43);
 		exit(EXIT_SUCCESS);
 	}
 	*file_check = _strlen(prompt_input);
-	
-	if (*file_check == -1 && isatty(STDIN_FILENO))
-	{
-		write(1, "Logging Out From simple shell (?) .....", 43);
-		free(prompt_input);
+
+	if (*file_check == -1) 
+	{	
+		if(isatty(STDIN_FILENO))
+			free(prompt_input);
 		exit(EXIT_SUCCESS);
 	}
 	else if (*file_check == -1)
 	{
-		write(1, "Logging Out From simple shell (?) .....", 43);
 		free(prompt_input);
 		exit(EXIT_SUCCESS);
 	}
-
-	if (*file_check == 0 && isatty(STDIN_FILENO))
+	if (*file_check == 0) 
 	{
-		free(prompt_input);
+		if (isatty(STDIN_FILENO))
+			free(prompt_input);
 		return (shell_prompt(file_check));
 	}
 

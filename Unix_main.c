@@ -9,51 +9,41 @@
 
 int main(int argc, char *argv[])
 {
-	char *unix_input,**input_arg;
+	char *unix_input;/***input_arg;*/
 	ssize_t file_check;
-	int exe_env, exe_stat = 0;
+	int /*exe_env,*/ exe_stat = 0;
 
 	(void)argc;
-	(void)argv;
+	/*(void)argv;*/
 
 	while (1)
 	{
 		unix_input = NULL, file_check = 0;
 		unix_input = shell_prompt(&file_check);
-		input_arg = command_tokens(unix_input, input_arg, file_check);
-		if (input_arg[0] == NULL)
+		argv = command_tokens(unix_input, argv, file_check);
+		if (argv[0] == NULL)
 		{
 			free(unix_input);
+			free(argv);
 			continue;
 		}
-		if (_strcmp(input_arg[0], "env") == 0)
+		if (_strncmp(argv[0], "exit", 4) == 0)
 		{
 			free(unix_input);
-			show_env();
-			free_array_vectors(input_arg);
+			exit_prompt(argv, exe_stat);
+			free_array_vectors(argv);
 			continue;
 		}
-		if (_strcmp(input_arg[0], "exit") == 0)
-		{
-			free(unix_input);
-			exit_shell(input_arg, exe_stat);
-			free_array_vectors(input_arg);
-			continue;
-		}
-		exe_stat = exec_command(input_arg);
+		exe_stat = exec_command(argv);
 		if (exe_stat == 1)
 		{
-			display_error_message(input_arg, "File not found");
+			display_error_message(argv, "File not found");
 		}
-		exe_env = execute_env(input_arg);
-		if (exe_env != 0)
+		if (execute_env(argv) != 0)
+		{
 			free(unix_input);
-		free_array_vectors(input_arg);
-		/*exe_stat = exec_command(input_arg);
-		  if (exe_stat == 1)
-		  display_error_message(input_arg, "File not found");
-		  free(unix_input);
-		  free_array_vectors(input_arg);*/
+		free_array_vectors(argv);
+		}
 	}
 	return (0);
 }

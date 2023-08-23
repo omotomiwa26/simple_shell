@@ -19,7 +19,7 @@
 
 extern char **environ;
 
-char *_getline();
+char *get_line();
 
 int _atoi(char *s);
 
@@ -53,7 +53,7 @@ int dis_string(char *str);
 
 int _puterr(char c);
 
-void exit_shell(char **exit_command, int exit_status);
+void exit_prompt(char **exit_command, int exit_status);
 
 char *create_env(char *env_name, char *env_value);
 
@@ -74,8 +74,6 @@ char *shell_prompt(ssize_t *file_check);
 void free_array_vectors(char *argv[]);
 
 char **command_tokens(char *cmd_input, char **cmd, ssize_t file);
-
-size_t get_line(char **lineptr, size_t *n, FILE *stream);
 
 int set_environ(char *args[]);
 
