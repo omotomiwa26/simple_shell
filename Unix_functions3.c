@@ -28,66 +28,21 @@ int _strncmp(const char *str1, const char *str2, size_t num)
 	return (0);
 }
 /**
- * exit_shell - function exits the command line prompt
- * @argv_cmd: command argument entered
+ * exit_prompt - function exits the command line prompt
+ * @exit_command: command argument entered
  * @exit_status: integer coversion of message displayed on exit
  * Return: NULL
- * Else: Exit the shell
+ * Else: Exit the shell prompt
  */
-/*void exit_shell(char *argv_cmd[], int exit_status)
+void exit_prompt(char **exit_command, int exit_status)
 {
-	char temp_char, *error_message = "Exiting Shell Failed";
-	char exit_message[20];
-	int i, digit, length = 0;
-	int temp = exit_status;
-
-	if (temp == 0)
+	if (exit_command[1])
 	{
-		exit_message[length++] = '0';
+		exit_status = _atoi(exit_command[1]);
 	}
-	else
-	{
-		while (temp)
-		{
-			digit = temp % 10;
-			exit_message[length++] = '0' + digit;
-			temp /= 10;
-		}
-	}
-	for (i = 0; i < length / 2; i++)
-	{
-		temp_char = exit_message[i];
-		exit_message[i] = exit_message[length - i - 1];
-		exit_message[length - i - 1] = temp_char;
-	}
-	exit_message[length] = '\0';
-	if (argv_cmd[1])
-	{
-		exit_status = _atoi(argv_cmd[1]);
-		if (exit_status >= 0)
-		{
-			write(1, exit_message, length);
-			exit(exit_status);
-		}
-		else
-		{
-			write(1, error_message, _strlen(error_message));
-			write(1, "\n", 1);
-		}
-	}
-	exit(0);
-}*/
- void exit_shell(char **exit_command, int exit_status)
-{
-exit_status = EXIT_SUCCESS;
-
-if (exit_command[1])
-exit_status = _atoi(exit_command[1]);
-
-free_array_vectors(exit_command);
-exit(exit_status);
+	free_array_vectors(exit_command);
+	exit(exit_status);
 }
-
 /**
  * create_env - creates an environment variable
  * @env_name: name of the variable
@@ -124,12 +79,6 @@ char *create_env(char *env_name, char *env_value)
 int _echo(char *args)
 {
 	char *value;
-
-	if (args == NULL)
-	{
-		write(2, "Error: Enter string to echo", 30);
-		return (-1);
-	}
 
 	value = _getenv(args);
 	if (value)

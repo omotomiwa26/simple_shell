@@ -2,7 +2,7 @@
 /**
  * *_strcat - concatenates @src to @dest
  * @src: the source string to append to @dest
- * @dest: the destiation string to be concatenated upon
+ * @dest: the destination string to be concatenated upon
  * Return:pointer to the resulting string.
  */
 char *_strcat(char *dest, char *src)
@@ -69,22 +69,25 @@ int _strlen(char *s)
 
 /**
  * *_strcpy - function copies the string pointed to by src.
- * @dest: char type string
- * @src: char type string
+ * @dest: char destination string
+ * @src: char source string
  * Description: Copy the string pointed to by pointer __src__ to
  * the buffer pointed to by **dest**
  * Return: Pointer to _dest_
  */
 
-char *_strcpy(char *dest, const char *src) 
+char *_strcpy(char *dest, const char *src)
 {
-    int a = 0;
+	int n = 0;
 
-    do {
-        dest[a] = src[a];
-    } while (src[a++] != '\0');
+	while (src[n] != '\0')
+	{
+		dest[n] = src[n];
+		n++;
+	}
+	dest[n] = '\0';
 
-    return dest;
+	return (dest);
 }
 /**
  * *_strchr - function searches a string for an integer
