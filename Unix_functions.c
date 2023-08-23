@@ -69,14 +69,14 @@ int _strlen(char *s)
 
 /**
  * *_strcpy - function copies the string pointed to by src.
- * @dest: char destinationstring
+ * @dest: char destination string
  * @src: char source string
  * Description: Copy the string pointed to by pointer __src__ to
  * the buffer pointed to by **dest**
  * Return: Pointer to _dest_
  */
 
-char *_strcpy(char *dest, const char *src) 
+char *_strcpy(char *dest, const char *src)
 {
 	int n = 0;
 
