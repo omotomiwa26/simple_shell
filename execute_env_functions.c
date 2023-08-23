@@ -6,33 +6,11 @@
  */
 int execute_env(char **args)
 {
-	if (_strncmp(args[0], "env", 3) == 0)
+	if (_strncmp(args[0], "env", _strlen(args[0])) == 0)
 	{
 		show_env();
-	}	
-	/*else if (_strncmp(args[0], "setenv", 6) == 0)
-	{
-		if (args[1] && args[2])
-		{
-			set_env(args[1], args[2]);
-		}
-		else
-		{
-			write(2, "Error: Setenv Failed\n", 22);
-		}
 	}
-	else if (_strncmp(args[0], "unsetenv", 8) == 0)
-	{
-		if (args[1])
-		{
-			unset_env(args[1]);
-		}
-		else
-		{
-			write(2, "Error: Unsetenv Failed\n", 24);
-		}
-	}*/
-	else if (_strncmp(args[0], "echo", 4) == 0)
+	else if (_strncmp(args[0], "echo", _strlen(args[0])) == 0)
 	{
 		if (args[1])
 		{
